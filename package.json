@@ -1,0 +1,50 @@
+{
+  "name": "xbar-internet-speedtest",
+  "version": "0.0.0",
+  "description": "xbar plugin to test you internet speed in regular interval and display upload and download speed in the menu bar",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "chrisspiegl/xbar-internet-speedtest",
+  "author": {
+    "name": "Chris Spiegl",
+    "email": "chris@chrisspiegl.com",
+    "url": "https://chrisspiegl.com/"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "cu": "ncu",
+    "cu:fix": "ncu -u",
+    "test": "xo --fix"
+  },
+  "files": [
+    "icon.png",
+    "index.js",
+    "index.sh"
+  ],
+  "keywords": [
+    "xbar",
+    "plugin",
+    "download",
+    "upload",
+    "speedtest",
+    "speed-test",
+    "menubar",
+    "mac",
+    "macos",
+    "cloudflare",
+    "speedtestnet"
+  ],
+  "dependencies": {
+    "@sindresorhus/xbar": "^2.0.0",
+    "canvas": "^2.8.0",
+    "run-node": "^2.0.0",
+    "universal-speedtest": "^2.0.2"
+  },
+  "devDependencies": {
+    "npm-check-updates": "^12.0.5",
+    "xo": "^0.47.0"
+  }
+}
