@@ -70,6 +70,45 @@ async function runSpeedtest() {
 	return result;
 }
 
+function createImage(width, height, scale, padSpaces, download, upload) {
+	const {createCanvas} = canvas;
+
+	const myCanvas = createCanvas(
+		Math.floor(width * scale),
+		Math.floor(height * scale),
+	);
+	const ctx = myCanvas.getContext('2d');
+
+	ctx.scale(scale, scale);
+
+	ctx.strokeStyle = '#FFF';
+	ctx.lineWidth = 2;
+	if (config.drawBox) {
+		ctx.strokeRect(0, 0, width, height);
+	}
+
+	ctx.font = '10px SF Mono'; // Hack Nerd Font // Ubuntu Mono' // Source Code Pro'
+	ctx.textAlign = 'left';
+	ctx.textBaseline = 'top';
+	ctx.fillStyle = '#FFFFFF';
+
+	const text1l = 'D:';
+	const text1r = `${pad(padSpaces, download, true)}`;
+	const text2l = 'U:';
+	const text2r = `${pad(padSpaces, upload, true)}`;
+
+	ctx.fillText(text1l, 0, 0);
+	ctx.fillText(text2l, 0, 10);
+
+	ctx.textAlign = 'right';
+	ctx.fillText(text1r, width, 0);
+	ctx.fillText(text2r, width, 10);
+
+	return myCanvas.toBuffer('image/png', {
+		resolution: 74 * scale,
+	});
+}
+
 const result = await runSpeedtest();
 
 const download = `${(Math.round(result.downloadSpeed * 100) / 100).toFixed(
@@ -79,41 +118,21 @@ const upload = `${(Math.round(result.uploadSpeed * 100) / 100).toFixed(2)} ${
 	config.unit
 }`;
 
+const scale = 10;
 const length = Math.max(download.length, upload.length);
 const padSpaces = Array.from({length: length + 1}).join(' ');
 
 const width = 10 + (length * 6);
 const height = 20;
 
-const {createCanvas} = canvas;
-
-const myCanvas = createCanvas(width, height);
-const ctx = myCanvas.getContext('2d');
-
-ctx.strokeStyle = '#FFF';
-ctx.lineWidth = 2;
-if (config.drawBox) {
-	ctx.strokeRect(0, 0, width, height);
-}
-
-ctx.font = 'bold 10px Hack Nerd Font'; // Ubuntu Mono' // Source Code Pro'
-ctx.textAlign = 'left';
-ctx.textBaseline = 'top';
-ctx.fillStyle = '#FFFFFF';
-
-const text1l = 'D:';
-const text1r = `${pad(padSpaces, download, true)}`;
-const text2l = 'U:';
-const text2r = `${pad(padSpaces, upload, true)}`;
-
-ctx.fillText(text1l, 0, 0);
-ctx.fillText(text2l, 0, 10);
-
-ctx.textAlign = 'right';
-ctx.fillText(text1r, width, 0);
-ctx.fillText(text2r, width, 10);
-
-const imageBase64 = myCanvas.toBuffer('image/png').toString('base64');
+const imageBase64 = createImage(
+	width,
+	height,
+	scale,
+	padSpaces,
+	download,
+	upload,
+).toString('base64');
 
 xbar([
 	{
