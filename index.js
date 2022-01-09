@@ -123,7 +123,7 @@ xbar([
 	},
 	separator,
 	{
-		text: `Ping: ${result.ping * 1000} ms`,
+		text: `Ping: ${result.ping} ms`,
 	},
 	{
 		text: `Download speed: ${result.downloadSpeed} ${config.unit}`,
