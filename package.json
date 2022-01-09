@@ -1,6 +1,6 @@
 {
   "name": "xbar-internet-speedtest",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "xbar plugin to test you internet speed in regular interval and display upload and download speed in the menu bar",
   "type": "module",
   "main": "index.js",
